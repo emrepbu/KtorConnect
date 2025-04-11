@@ -8,10 +8,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KtorConnect">
+        <service
+            android:name=".service.ServerService"
+            android:enabled="true"
+            android:exported="false" />
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.KtorConnect">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

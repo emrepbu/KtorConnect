@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
  * In a real application, this data might be stored in a database.
  */
 class DataRepository {
-
     private val _dataSet = MutableStateFlow(
         listOf(
             SampleData(0, "Item 0", 0.0),
