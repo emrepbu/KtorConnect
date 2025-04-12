@@ -90,7 +90,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
 
     // Server port
-    private val _serverPort = MutableStateFlow("10011")
+    private val _serverPort = MutableStateFlow("8080")
     val serverPort: StateFlow<String> = _serverPort.asStateFlow()
 
     // Server logs
@@ -108,7 +108,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Sunucuyu başlat
     fun startServer() {
-        val port = _serverPort.value.toIntOrNull() ?: 10011
+        val port = _serverPort.value.toIntOrNull() ?: 8080
         viewModelScope.launch(Dispatchers.IO) {
             serverManager.startServer(port)
         }

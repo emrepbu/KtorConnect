@@ -14,7 +14,7 @@ class ServerManager(private val context: Context) {
     private val _serverStatus = MutableStateFlow(ServerStatus.STOPPED)
     val serverStatus: StateFlow<ServerStatus> = _serverStatus.asStateFlow()
 
-    private val _serverPort = MutableStateFlow(10011)
+    private val _serverPort = MutableStateFlow(8080)
     val serverPort: StateFlow<Int> = _serverPort.asStateFlow()
 
     private val _serverAddresses = MutableStateFlow<List<ServerAddress>>(emptyList())
@@ -23,7 +23,7 @@ class ServerManager(private val context: Context) {
     private val _logs = MutableStateFlow<List<LogEntry>>(emptyList())
     val logs: StateFlow<List<LogEntry>> = _logs.asStateFlow()
 
-    fun startServer(port: Int = 10011) {
+    fun startServer(port: Int = 8080) {
         if (_serverStatus.value == ServerStatus.RUNNING || _serverStatus.value == ServerStatus.STARTING) {
             addLog("Server already running")
             return
