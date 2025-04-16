@@ -1,19 +1,16 @@
 name: Android CI
-
 env:
   # Module names for your project
   server_module: server
   client_module: client
   # Project name
   project_name: KtorConnect
-
 on:
   push:
     branches:
       - 'main'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,30 +39,64 @@ jobs:
           ./gradlew assembleDebug
           ./gradlew assembleRelease
       
-      # Upload Server Debug APK
+      # Upload Server Debug APK as artifact
       - name: Upload Server APK Debug
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.project_name }} - Server - Debug APK
           path: ${{ env.server_module }}/build/outputs/apk/debug/
       
-      # Upload Server Release APK
+      # Upload Server Release APK as artifact
       - name: Upload Server APK Release
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.project_name }} - Server - Release APK
           path: ${{ env.server_module }}/build/outputs/apk/release/
       
-      # Upload Client Debug APK
+      # Upload Client Debug APK as artifact
       - name: Upload Client APK Debug
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.project_name }} - Client - Debug APK
           path: ${{ env.client_module }}/build/outputs/apk/debug/
       
-      # Upload Client Release APK
+      # Upload Client Release APK as artifact
       - name: Upload Client APK Release
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.project_name }} - Client - Release APK
           path: ${{ env.client_module }}/build/outputs/apk/release/
+          
+      # Rename APKs for easier identification
+      - name: Rename APKs
+        run: |
+          mkdir -p release_files
+          cp ${{ env.server_module }}/build/outputs/apk/debug/*.apk release_files/KtorConnect-Server-debug.apk
+          cp ${{ env.server_module }}/build/outputs/apk/release/*.apk release_files/KtorConnect-Server-release.apk
+          cp ${{ env.client_module }}/build/outputs/apk/debug/*.apk release_files/KtorConnect-Client-debug.apk
+          cp ${{ env.client_module }}/build/outputs/apk/release/*.apk release_files/KtorConnect-Client-release.apk
+      
+      # Create GitHub Release
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.date_today }}
+          name: Release ${{ env.date_today }}
+          body: |
+            KtorConnect Release ${{ env.date_today }}
+            
+            This release contains:
+            - Server APK (Debug & Release)
+            - Client APK (Debug & Release)
+            
+            Built automatically using GitHub Actions.
+          draft: false
+          prerelease: false
+          files: |
+            release_files/KtorConnect-Server-debug.apk
+            release_files/KtorConnect-Server-release.apk
+            release_files/KtorConnect-Client-debug.apk
+            release_files/KtorConnect-Client-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
