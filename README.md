@@ -1,1 +1,113 @@
-# KtorConnect
+# KtorConnect - Android Ktor Server-Client Architecture
+
+## Overview
+
+KtorConnect is a project demonstrating a client-server architecture entirely on Android devices. It consists of two
+separate Android applications:
+
+1. **Server Application**: An Android app that hosts a Ktor server using a foreground service
+2. **Client Application**: An Android app that connects to the server via REST API and WebSocket
+
+This system allows Android devices to communicate with each other directly over a local network, without requiring an
+external server.
+
+## Applications
+
+### Server Application
+
+The server app runs a Ktor HTTP and WebSocket server directly on the Android device, making it accessible over the local
+network.
+
+**Key Components:**
+
+- `MainActivity`: UI for controlling the server (start/stop)
+- `ServerManager`: Manages server lifecycle and maintains server state
+- `ServerService`: Foreground service that runs the Ktor server
+- `DataRepository`: Manages the sample data
+- `ServerModule`: Configures Ktor routes and endpoints
+
+**Features:**
+
+- Start/stop server control
+- Server status monitoring
+- Port configuration
+- IP address display for connection
+- Real-time logs
+- REST API endpoints for CRUD operations
+- WebSocket support for real-time updates
+
+### Client Application
+
+The client app connects to the server app and demonstrates data exchange capabilities.
+
+**Key Components:**
+
+- `MainActivity`: Client UI
+- `KtorApiClient`: Handles HTTP requests and WebSocket connection
+- `MainViewModel`: Manages UI state and server communication
+
+**Features:**
+
+- Server connection configuration
+- Data retrieval and display
+- Submitting new data
+- Real-time updates via WebSocket
+
+## Communication
+
+The applications communicate through:
+
+1. **REST API**: For standard CRUD operations
+   - GET `/api/items`: Get all items
+   - GET `/api/items/{id}`: Get specific item
+   - POST `/api/items`: Add new item
+   - PUT `/api/items/{id}`: Update an item
+   - DELETE `/api/items/{id}`: Delete an item
+   - POST `/api/broadcast`: Broadcast a message to all WebSocket clients
+
+2. **WebSocket**: For real-time communication
+   - Endpoint: `/ws`
+   - Provides instant data updates to all connected clients
+
+## Requirements
+
+- Android SDK 28+
+- Kotlin 1.8+
+- Ktor 3.1.2
+- Android Studio Arctic Fox or later
+
+## Setup and Installation
+
+1. Clone the repository
+2. Open both projects in Android Studio
+3. Build and run the server application on one device
+4. Note the IP address displayed in the server application
+5. Build and run the client application on another device
+6. Enter the server's IP address and port in the client app
+7. Connect and begin data exchange
+
+## Use Cases
+
+- Local data sharing between Android devices
+- Simple client-server demonstration
+- Temporary local API server for testing
+- IoT control systems
+- Local network applications without internet dependency
+
+## Technical Details
+
+- **Networking**: Uses Ktor for both server and client side
+- **Concurrency**: Utilizes Kotlin Coroutines for asynchronous operations
+- **UI**: Built with Jetpack Compose
+- **Architecture**: MVVM pattern with repository
+- **Serialization**: Kotlin Serialization for JSON handling
+
+## License
+
+[MIT License](LICENSE)
+
+## Acknowledgements
+
+- [Ktor](https://ktor.io/)
+- [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
+- [Jetpack Compose](https://developer.android.com/jetpack/compose)
