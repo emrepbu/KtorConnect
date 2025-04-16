@@ -25,6 +25,20 @@ jobs:
       - name: Set repository name as env variable
         run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
       
+      # Extract version from build.gradle.kts
+      - name: Extract version information
+        run: |
+          # Server version
+          SERVER_VERSION=$(grep -o 'versionName = "[^"]*"' ${{ env.server_module }}/build.gradle.kts | cut -d'"' -f2)
+          echo "SERVER_VERSION=$SERVER_VERSION" >> $GITHUB_ENV
+          
+          # Client version
+          CLIENT_VERSION=$(grep -o 'versionName = "[^"]*"' ${{ env.client_module }}/build.gradle.kts | cut -d'"' -f2)
+          echo "CLIENT_VERSION=$CLIENT_VERSION" >> $GITHUB_ENV
+          
+          # Use server version for the release tag (you can modify this as needed)
+          echo "RELEASE_VERSION=$SERVER_VERSION" >> $GITHUB_ENV
+      
       - name: Set Up JDK
         uses: actions/setup-java@v4
         with:
@@ -71,32 +85,32 @@ jobs:
       - name: Rename APKs
         run: |
           mkdir -p release_files
-          cp ${{ env.server_module }}/build/outputs/apk/debug/*.apk release_files/KtorConnect-Server-debug.apk
-          cp ${{ env.server_module }}/build/outputs/apk/release/*.apk release_files/KtorConnect-Server-release.apk
-          cp ${{ env.client_module }}/build/outputs/apk/debug/*.apk release_files/KtorConnect-Client-debug.apk
-          cp ${{ env.client_module }}/build/outputs/apk/release/*.apk release_files/KtorConnect-Client-release.apk
+          cp ${{ env.server_module }}/build/outputs/apk/debug/*.apk release_files/KtorConnect-Server-${{ env.SERVER_VERSION }}-debug.apk
+          cp ${{ env.server_module }}/build/outputs/apk/release/*.apk release_files/KtorConnect-Server-${{ env.SERVER_VERSION }}-release.apk
+          cp ${{ env.client_module }}/build/outputs/apk/debug/*.apk release_files/KtorConnect-Client-${{ env.CLIENT_VERSION }}-debug.apk
+          cp ${{ env.client_module }}/build/outputs/apk/release/*.apk release_files/KtorConnect-Client-${{ env.CLIENT_VERSION }}-release.apk
       
       # Create GitHub Release
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ env.date_today }}
-          name: Release ${{ env.date_today }}
+          tag_name: v${{ env.RELEASE_VERSION }}
+          name: Release v${{ env.RELEASE_VERSION }}
           body: |
-            KtorConnect Release ${{ env.date_today }}
+            KtorConnect Release v${{ env.RELEASE_VERSION }} (${{ env.date_today }})
             
             This release contains:
-            - Server APK (Debug & Release)
-            - Client APK (Debug & Release)
+            - Server APK v${{ env.SERVER_VERSION }} (Debug & Release)
+            - Client APK v${{ env.CLIENT_VERSION }} (Debug & Release)
             
             Built automatically using GitHub Actions.
           draft: false
           prerelease: false
           files: |
-            release_files/KtorConnect-Server-debug.apk
-            release_files/KtorConnect-Server-release.apk
-            release_files/KtorConnect-Client-debug.apk
-            release_files/KtorConnect-Client-release.apk
+            release_files/KtorConnect-Server-${{ env.SERVER_VERSION }}-debug.apk
+            release_files/KtorConnect-Server-${{ env.SERVER_VERSION }}-release.apk
+            release_files/KtorConnect-Client-${{ env.CLIENT_VERSION }}-debug.apk
+            release_files/KtorConnect-Client-${{ env.CLIENT_VERSION }}-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
