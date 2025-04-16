@@ -17,7 +17,6 @@ import java.util.Locale
 class MainViewModel : ViewModel() {
     private val apiClient = KtorApiClient()
 
-    // UI states
     var serverIp by mutableStateOf("10.0.2.2")
         private set
 
@@ -39,7 +38,6 @@ class MainViewModel : ViewModel() {
     var statusMessage by mutableStateOf<StatusMessage?>(null)
         private set
 
-    // New item fields
     var newItemName by mutableStateOf("")
         private set
 
@@ -58,7 +56,7 @@ class MainViewModel : ViewModel() {
     // Connect to server
     fun connectToServer() {
         if (serverIp.isBlank()) {
-            showError("Lütfen sunucu IP adresini girin")
+            showError("Please enter a server IP")
             return
         }
 
@@ -73,14 +71,12 @@ class MainViewModel : ViewModel() {
 
             if (result.isSuccess) {
                 isConnected = true
-                showSuccess("Sunucuya başarıyla bağlandı")
-                println("Sunucuya başarıyla bağlandı")
+                showSuccess("Successfully connected to the server")
                 startWebSocket()
                 refreshData()
             } else {
                 isConnected = false
-                showError("Bağlantı hatası: ${result.exceptionOrNull()?.message ?: "Bilinmeyen hata"}")
-                println("Bağlantı hatası: ${result.exceptionOrNull()?.message ?: "Bilinmeyen hata"}")
+                showError("Connection error: ${result.exceptionOrNull()?.message ?: "Unknown error"}")
             }
         }
     }
@@ -98,12 +94,12 @@ class MainViewModel : ViewModel() {
             if (result.isSuccess) {
                 items = result.getOrDefault(emptyList())
                 if (items.isEmpty()) {
-                    showInfo("Sunucudan veri alındı fakat liste boş")
+                    showInfo("Data received from server but list is empty")
                 } else {
-                    showSuccess("${items.size} öğe yüklendi")
+                    showSuccess("${items.size} item updated")
                 }
             } else {
-                showError("Veri yüklenirken hata: ${result.exceptionOrNull()?.message ?: "Bilinmeyen hata"}")
+                showError("Error loading data: ${result.exceptionOrNull()?.message ?: "Unknown error"}")
             }
         }
     }
@@ -132,13 +128,13 @@ class MainViewModel : ViewModel() {
         if (!isConnected) return
 
         if (newItemName.isBlank()) {
-            showError("Lütfen bir isim girin")
+            showError("Please enter a name")
             return
         }
 
         val value = newItemValue.toDoubleOrNull()
         if (value == null) {
-            showError("Lütfen geçerli bir sayı girin")
+            showError("Please enter a valid value")
             return
         }
 
@@ -156,13 +152,13 @@ class MainViewModel : ViewModel() {
             isLoading = false
 
             if (result.isSuccess) {
-                showSuccess("Veri başarıyla gönderildi")
+                showSuccess("Data sent successfully")
                 newItemName = ""
                 newItemValue = ""
                 refreshData()
             } else {
                 println(result.exceptionOrNull()?.message)
-                showError("Veri gönderilirken hata: ${result.exceptionOrNull()?.message ?: "Bilinmeyen hata"}")
+                showError("Error loading data: ${result.exceptionOrNull()?.message ?: "Unknown error"}")
             }
         }
     }
@@ -192,12 +188,9 @@ class MainViewModel : ViewModel() {
 
     fun startWebSocket() {
         if (!isConnected) return
-        println("🧪 WebSocket başlatılıyor...")
-
         apiClient.connectWebSocket { receivedData ->
-            println("🔥 WebSocket ile veri alındı: ${receivedData.name}")
             items = buildList { addAll(items); add(receivedData) }
-            showInfo("Yeni veri alındı: ${receivedData.name}")
+            showInfo("${receivedData.name} data received")
         }
     }
 

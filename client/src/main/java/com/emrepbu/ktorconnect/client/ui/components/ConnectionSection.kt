@@ -47,7 +47,7 @@ fun ConnectionSection(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Sunucu Bağlantısı",
+                text = "Server Status",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -61,7 +61,7 @@ fun ConnectionSection(
                 OutlinedTextField(
                     value = serverIp,
                     onValueChange = onIpChange,
-                    label = { Text("Sunucu IP") },
+                    label = { Text("Server IP") },
                     singleLine = true,
                     modifier = Modifier
                         .weight(2f)
@@ -83,7 +83,7 @@ fun ConnectionSection(
                     onClick = onConnectClick,
                     enabled = !isLoading
                 ) {
-                    Text("Bağlan")
+                    Text("Connect")
                 }
             }
 
@@ -96,12 +96,12 @@ fun ConnectionSection(
             ) {
                 Icon(
                     imageVector = if (isConnected) Icons.Default.CheckCircle else Icons.Default.Error,
-                    contentDescription = "Bağlantı Durumu",
+                    contentDescription = "Connection Status",
                     tint = if (isConnected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(end = 8.dp)
                 )
                 Text(
-                    text = if (isConnected) "Sunucuya bağlı" else "Sunucuya bağlı değil",
+                    text = if (isConnected) "Connected" else "Disconnected",
                     color = if (isConnected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
                 )
             }

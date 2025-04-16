@@ -17,15 +17,12 @@ import com.emrepbu.ktorconnect.server.ui.theme.KtorConnectTheme
 
 class MainActivity : ComponentActivity() {
 
-    // Sunucu durum değişikliklerini dinlemek için receiver
     private var serverStatusReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ServerStatusReceiver oluştur
         serverStatusReceiver = ServerStatusReceiver { status ->
-            // Sunucu durumu değiştiğinde ServerManager'ı güncelle
             ServerManager.getInstance(this).updateServerStatus(status)
         }
 
@@ -44,7 +41,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Receiver'ı kaydet
         serverStatusReceiver?.let {
             registerReceiver(it, ServerStatusReceiver.getIntentFilter(), RECEIVER_EXPORTED)
         }
@@ -52,12 +48,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onPause() {
         super.onPause()
-        // Receiver'ı kaldır
         serverStatusReceiver?.let {
             try {
                 unregisterReceiver(it)
-            } catch (e: Exception) {
-                // İstisna durumlarını yok say
+            } catch (_: Exception) {
             }
         }
     }

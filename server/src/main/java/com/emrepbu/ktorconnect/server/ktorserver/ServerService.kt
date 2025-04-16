@@ -25,9 +25,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
-/**
- * Arka planda çalışan sunucu servisi.
- */
 class ServerService : Service() {
     private var server: EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration>? = null
     private var serverJob: Job? = null
@@ -64,12 +61,11 @@ class ServerService : Service() {
     @SuppressLint("ForegroundServiceType")
     private fun startServer(port: Int) {
         if (server != null) {
-            serverManager.addLog("Sunucu zaten çalışıyor")
+            serverManager.addLog("Server already running.")
             return
         }
 
-        // Daha detaylı loglar ekle
-        serverManager.addLog("Sunucu başlatılıyor... PORT: $port")
+        serverManager.addLog("Server startng... PORT: $port")
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -77,11 +73,10 @@ class ServerService : Service() {
             } else {
                 startForeground(NOTIFICATION_ID, createNotification())
             }
-            // Başlatma işlemini ayrı bir coroutine'de yap
+
             serverJob = CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    // İlk adım: Sunucuyu oluştur
-                    serverManager.addLog("Netty sunucusu oluşturuluyor...")
+                    serverManager.addLog("Creating Netty server...")
                     val serverInstance = embeddedServer(Netty, port = port) {
                         serverModule(
                             repository = dataRepository,
@@ -91,27 +86,24 @@ class ServerService : Service() {
                         )
                     }
 
-                    // İkinci adım: Sunucuyu başlat
-                    serverManager.addLog("Netty sunucusu başlatılıyor...")
+                    serverManager.addLog("Starting Netty server...")
                     serverInstance.start(wait = false)
 
-                    // Sunucu referansını sakla
                     server = serverInstance
 
-                    // Başarılı ise durumu güncelle
-                    serverManager.addLog("Sunucu başarıyla çalışıyor!")
+                    serverManager.addLog("The server is running successfully!")
                     serverManager.updateServerStatus(ServerStatus.RUNNING)
                 } catch (e: Exception) {
-                    val errorMessage = "Sunucu başlatılamadı: ${e.message ?: "Bilinmeyen hata"}"
+                    val errorMessage = "Server failed to start: ${e.message ?: "Unknown error"}"
                     serverManager.addLog(errorMessage, true)
-                    serverManager.addLog("Detay: ${e.stackTraceToString()}", true)
+                    serverManager.addLog("Details: ${e.stackTraceToString()}", true)
                     println(e.stackTraceToString())
                     serverManager.updateServerStatus(ServerStatus.ERROR)
                     stopSelf()
                 }
             }
         } catch (e: Exception) {
-            val errorMessage = "Servis başlatılamadı: ${e.message ?: "Bilinmeyen hata"}"
+            val errorMessage = "Service failed to start: ${e.message ?: "Unknown error"}"
             println(errorMessage)
             serverManager.addLog(errorMessage, true)
             serverManager.updateServerStatus(ServerStatus.ERROR)
@@ -122,7 +114,6 @@ class ServerService : Service() {
     private fun stopServer() {
         serverJob?.cancel()
 
-        // Durdurulma durumunu broadcast et
         ServerStatusReceiver.broadcastStatus(this, ServerStatus.STOPPING)
 
         val server = this.server
@@ -130,18 +121,16 @@ class ServerService : Service() {
             try {
                 server.stop(1, 2, TimeUnit.SECONDS)
             } catch (e: Exception) {
-                serverManager.addLog("Sunucu durdurulurken hata: ${e.message}", true)
+                serverManager.addLog("Error while stopping the server: ${e.message}", true)
             } finally {
                 this.server = null
                 serverManager.updateServerStatus(ServerStatus.STOPPED)
-                // Durduruldu durumunu broadcast et
                 ServerStatusReceiver.broadcastStatus(this, ServerStatus.STOPPED)
                 stopForeground(STOP_FOREGROUND_REMOVE)
                 stopSelf()
             }
         } else {
             serverManager.updateServerStatus(ServerStatus.STOPPED)
-            // Durduruldu durumunu broadcast et
             ServerStatusReceiver.broadcastStatus(this, ServerStatus.STOPPED)
             stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf()
@@ -175,8 +164,8 @@ class ServerService : Service() {
 
         // Build notification
         return NotificationCompat.Builder(this, channelId)
-            .setContentTitle("Android Sunucu")
-            .setContentText("Sunucu çalışıyor")
+            .setContentTitle("Android Server")
+            .setContentText("Server working")
             .setSmallIcon(R.drawable.ic_notification)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_LOW)

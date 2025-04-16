@@ -37,11 +37,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             initialValue = emptyList()
         )
 
-    // Adres kopyalandığında kullanıcıya bildirim göstermek için fonksiyon ekleyin:
     fun showAddressCopiedToast() {
         Toast.makeText(
             getApplication<Application>().applicationContext,
-            "Sunucu adresi panoya kopyalandı",
+            "Server address copied to clipboard",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -54,12 +53,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                 val dataToSend = SampleData(
                     id = broadcastCounter,
-                    name = "Sunucudan Gönderilen #$broadcastCounter",
-                    value = Math.random() * 100, // Rastgele değer
+                    name = "#$broadcastCounter Sent from Server",
+                    value = Math.random() * 100,
                     timestamp = System.currentTimeMillis()
                 )
 
-                // HTTP isteği yap
                 val httpClient = HttpClient(Android) {
                     install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
                         json()
@@ -73,10 +71,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     setBody(dataToSend)
                 }
 
-                serverManager.addLog("Veri yayını başarıyla gönderildi")
+                serverManager.addLog("Data broadcast sent successfully")
             } catch (e: Exception) {
-                println("Veri yayını başarısız: ${e.message}")
-                serverManager.addLog("Veri yayını başarısız: ${e.message}", true)
+                serverManager.addLog("Data broadcast failed: ${e.message}", true)
             }
         }
     }
@@ -101,12 +98,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             initialValue = emptyList()
         )
 
-    // Port değişikliği
     fun updatePort(port: String) {
         _serverPort.value = port
     }
 
-    // Sunucuyu başlat
     fun startServer() {
         val port = _serverPort.value.toIntOrNull() ?: 8080
         viewModelScope.launch(Dispatchers.IO) {
@@ -114,14 +109,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    // Sunucuyu durdur
     fun stopServer() {
         viewModelScope.launch(Dispatchers.IO) {
             serverManager.stopServer()
         }
     }
 
-    // Logları temizle
     fun clearLogs() {
         viewModelScope.launch(Dispatchers.IO) {
             serverManager.clearLogs()

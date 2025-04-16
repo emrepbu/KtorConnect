@@ -42,7 +42,7 @@ fun NewItemForm(
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "Yeni Veri Ekle",
+                text = "Add New Item",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -51,7 +51,7 @@ fun NewItemForm(
             OutlinedTextField(
                 value = name,
                 onValueChange = onNameChange,
-                label = { Text("İsim") },
+                label = { Text("Name") },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -61,7 +61,7 @@ fun NewItemForm(
             OutlinedTextField(
                 value = value,
                 onValueChange = onValueChange,
-                label = { Text("Değer") },
+                label = { Text("Value") },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                 modifier = Modifier
@@ -74,7 +74,7 @@ fun NewItemForm(
                 enabled = !isLoading,
                 modifier = Modifier.align(Alignment.End)
             ) {
-                Text("Gönder")
+                Text("Send")
             }
         }
     }

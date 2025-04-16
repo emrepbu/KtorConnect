@@ -44,11 +44,11 @@ fun MainScreen(viewModel: MainViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Ktor İstemci") },
+                title = { Text("Ktor Client") },
                 actions = {
                     if (viewModel.isConnected) {
                         IconButton(onClick = { viewModel.refreshData() }) {
-                            Icon(Icons.Default.Refresh, contentDescription = "Yenile")
+                            Icon(Icons.Default.Refresh, contentDescription = "Refresh")
                         }
                     }
                 }
@@ -59,7 +59,7 @@ fun MainScreen(viewModel: MainViewModel) {
                 FloatingActionButton(
                     onClick = { showNewItemForm = true }
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "Yeni Veri Ekle")
+                    Icon(Icons.Default.Add, contentDescription = "Add new item")
                 }
             }
         }
@@ -119,7 +119,7 @@ fun MainScreen(viewModel: MainViewModel) {
                 ) {
                     if (viewModel.isConnected) {
                         Text(
-                            text = "Veriler",
+                            text = "Data",
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
                             modifier = Modifier.padding(bottom = 8.dp)
@@ -138,7 +138,7 @@ fun MainScreen(viewModel: MainViewModel) {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "Henüz veri bulunmuyor",
+                                    text = "No data yet",
                                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                                 )
                             }
@@ -159,7 +159,7 @@ fun MainScreen(viewModel: MainViewModel) {
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Sunucuya bağlanın",
+                                text = "Connect to the server",
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                             )
                         }

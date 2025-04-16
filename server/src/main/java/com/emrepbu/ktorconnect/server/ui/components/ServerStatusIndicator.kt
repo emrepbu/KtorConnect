@@ -23,11 +23,11 @@ import com.emrepbu.ktorconnect.server.data.ServerStatus
 @Composable
 fun ServerStatusIndicator(serverStatus: ServerStatus) {
     val (statusColor, statusText) = when (serverStatus) {
-        ServerStatus.RUNNING -> Pair(Color.Green, "Çalışıyor")
-        ServerStatus.STOPPED -> Pair(Color.Gray, "Durduruldu")
-        ServerStatus.STARTING -> Pair(Color.Yellow, "Başlatılıyor")
-        ServerStatus.STOPPING -> Pair(Color.Yellow, "Durduruluyor")
-        ServerStatus.ERROR -> Pair(Color.Red, "Hata!")
+        ServerStatus.RUNNING -> Pair(Color.Green, "Running")
+        ServerStatus.STOPPED -> Pair(Color.Gray, "Stopped")
+        ServerStatus.STARTING -> Pair(Color.Yellow, "Starting")
+        ServerStatus.STOPPING -> Pair(Color.Yellow, "Stopping")
+        ServerStatus.ERROR -> Pair(Color.Red, "Error!")
     }
 
     Row(
@@ -37,7 +37,7 @@ fun ServerStatusIndicator(serverStatus: ServerStatus) {
             .padding(8.dp)
     ) {
         Text(
-            text = "Durum:",
+            text = "Status:",
             fontWeight = FontWeight.Bold
         )
 

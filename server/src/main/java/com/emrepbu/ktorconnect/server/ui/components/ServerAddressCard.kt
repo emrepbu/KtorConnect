@@ -55,7 +55,7 @@ fun ServerAddressCard(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Sunucu Adresi",
+                text = "Server Address",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
@@ -64,19 +64,19 @@ fun ServerAddressCard(
 
             if (serverStatus != ServerStatus.RUNNING) {
                 Text(
-                    text = "Sunucu çalışmıyor. Sunucu adresini görmek için sunucuyu başlatın.",
+                    text = "The server is not running. Start the server to see the server address.",
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     fontSize = 14.sp
                 )
             } else if (serverAddresses.isEmpty()) {
                 Text(
-                    text = "Sunucu çalışıyor, ancak IP adresi tespit edilemedi.",
+                    text = "The server is running, but the IP address could not be determined.",
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     fontSize = 14.sp
                 )
             } else {
                 Text(
-                    text = "Aşağıdaki adreslerden sunucuya erişebilirsiniz:",
+                    text = "You can access the server from the following addresses:",
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     fontSize = 14.sp
                 )
@@ -117,7 +117,7 @@ fun ServerAddressCard(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.ContentCopy,
-                                contentDescription = "Adresi Kopyala"
+                                contentDescription = "Copy Address"
                             )
                         }
                     }

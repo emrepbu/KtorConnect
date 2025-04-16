@@ -2,11 +2,11 @@ package com.emrepbu.ktorconnect.client.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -37,24 +37,24 @@ fun ItemDetailDialog(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Veri Detayları",
+                    text = "Data Details",
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
                 DetailRow("ID:", "#${item.id}")
-                DetailRow("İsim:", item.name)
-                DetailRow("Değer:", "${item.value}")
-                DetailRow("Tarih:", formatTimestamp(item.timestamp))
+                DetailRow("Name:", item.name)
+                DetailRow("Value:", "${item.value}")
+                DetailRow("Time:", formatTimestamp(item.timestamp))
 
-                Divider(modifier = Modifier.padding(vertical = 16.dp))
+                Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
                 TextButton(
                     onClick = onDismiss,
                     modifier = Modifier.align(Alignment.End)
                 ) {
-                    Text("Kapat")
+                    Text("Close")
                 }
             }
         }

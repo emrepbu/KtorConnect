@@ -47,12 +47,12 @@ fun ItemCard(
                     fontSize = 16.sp
                 )
                 Text(
-                    text = "Değer: ${item.value}",
+                    text = "Value: ${item.value}",
                     fontSize = 14.sp,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Text(
-                    text = "Tarih: ${formatTimestamp(item.timestamp)}",
+                    text = "Time: ${formatTimestamp(item.timestamp)}",
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     modifier = Modifier.padding(top = 4.dp)

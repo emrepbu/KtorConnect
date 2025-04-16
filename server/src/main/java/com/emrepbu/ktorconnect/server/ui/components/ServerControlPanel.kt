@@ -49,7 +49,7 @@ fun ServerControlPanel(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Sunucu Kontrolü",
+                text = "Server Control",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
@@ -77,7 +77,7 @@ fun ServerControlPanel(
                             onClick = onStartServer,
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Sunucuyu Başlat")
+                            Text("Start Server")
                         }
                     }
 
@@ -86,7 +86,7 @@ fun ServerControlPanel(
                             onClick = onStopServer,
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Sunucuyu Durdur")
+                            Text("Stop Server")
                         }
                     }
 
@@ -98,10 +98,10 @@ fun ServerControlPanel(
                         ) {
                             Text(
                                 when (serverStatus) {
-                                    ServerStatus.STARTING -> "Başlatılıyor..."
-                                    ServerStatus.STOPPING -> "Durduruluyor..."
-                                    ServerStatus.ERROR -> "Hata!"
-                                    else -> "İşleniyor..."
+                                    ServerStatus.STARTING -> "Starting..."
+                                    ServerStatus.STOPPING -> "Stopping..."
+                                    ServerStatus.ERROR -> "Error!"
+                                    else -> "Processing..."
                                 }
                             )
                         }
@@ -120,7 +120,7 @@ fun ServerControlPanel(
                     .fillMaxWidth()
                     .padding(top = 8.dp)
             ) {
-                Text("Tüm İstemcilere Veri Gönder")
+                Text("Send Data to All Clients")
             }
         }
     }

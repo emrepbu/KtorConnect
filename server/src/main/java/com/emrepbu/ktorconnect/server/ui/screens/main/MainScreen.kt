@@ -28,7 +28,7 @@ fun MainScreen(viewModel: MainViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Android Ktor Sunucu") }
+                title = { Text("Android Ktor Server") }
             )
         }
     ) { padding ->
@@ -47,7 +47,6 @@ fun MainScreen(viewModel: MainViewModel) {
                 onSendBroadcast = viewModel::broadcastData,
             )
 
-            // Sunucu adresi kartını ekleyin
             ServerAddressCard(
                 serverStatus = serverStatus,
                 serverAddresses = serverAddresses,

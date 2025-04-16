@@ -177,11 +177,11 @@ fun Application.serverModule(
                 val data = call.receive<SampleData>()
                 val jsonMessage = Json.encodeToString(data)
                 BroadcastChannel.broadcast(jsonMessage)
-                logCallback("Veri başarıyla yayınlandı")
-                call.respond(mapOf("status" to "success", "message" to "Veri yayınlandı"))
+                logCallback("Data sent successfully: $jsonMessage")
+                call.respond(mapOf("status" to "success", "message" to "Data sent successfully"))
             } catch (e: Exception) {
-                logCallback("Yayın hatası: ${e.message}")
-                call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Yayın başarısız"))
+                logCallback("Data send error: ${e.message}")
+                call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Data send error"))
             }
         }
     }

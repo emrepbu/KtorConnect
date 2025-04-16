@@ -39,27 +39,18 @@ class KtorApiClient {
                 ignoreUnknownKeys = true
             })
         }
-        install(io.ktor.client.plugins.websocket.WebSockets) // 🔥 BU SATIR GEREKLİ
+        install(io.ktor.client.plugins.websocket.WebSockets)
 
-        // Timeout süresini uzatın
         install(HttpTimeout) {
             requestTimeoutMillis = 15000
             connectTimeoutMillis = 15000
             socketTimeoutMillis = 15000
         }
 
-        // Hataları yakalamak için
-//        install(Logging) {
-//            logger = Logger.DEFAULT
-//            level = LogLevel.ALL
-//        }
-
-        // HTTP izinlerini genişletin
         engine {
             pipelining = false
         }
     }
-
 
     // Server connection details
     private var serverIp: String = ""
@@ -72,7 +63,6 @@ class KtorApiClient {
 
     // Base URL builder
     private fun buildUrl(endpoint: String): String {
-        // URL oluştururken önceden "http://" kontrolü yap
         val baseUrl = if (serverIp.startsWith("http://")) serverIp else "http://$serverIp"
         return "$baseUrl:$serverPort$endpoint"
     }
@@ -129,26 +119,19 @@ class KtorApiClient {
         client.close()
     }
 
-    // WebSocket bağlantı durumu
     private val _isWebSocketConnected = MutableStateFlow(false)
     val isWebSocketConnected: StateFlow<Boolean> = _isWebSocketConnected.asStateFlow()
 
-    // Gelen mesajlar
     private val _incomingMessages = MutableStateFlow<List<SampleData>>(emptyList())
     val incomingMessages: StateFlow<List<SampleData>> = _incomingMessages.asStateFlow()
 
-    // WebSocket bağlantısı
     private var webSocketSession: DefaultClientWebSocketSession? = null
     private var webSocketJob: Job? = null
 
-    // WebSocket bağlantısı kur
     fun connectWebSocket(callback: (SampleData) -> Unit) {
         if (webSocketJob?.isActive == true) {
-            println("⚠️ WebSocket zaten açık")
             return
         }
-
-        println("🔌 WebSocket bağlanıyor: $serverIp:$serverPort")
 
         webSocketJob = CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -158,41 +141,37 @@ class KtorApiClient {
                     port = serverPort,
                     path = "/ws"
                 ) {
-                    println("✅ WebSocket bağlantısı kuruldu!") // 🔥 bu log çok önemli
                     webSocketSession = this
                     _isWebSocketConnected.value = true
 
                     for (frame in incoming) {
                         frame as? Frame.Text ?: continue
                         val text = frame.readText()
-                        println("📩 Veri alındı (ham): $text")
+                        println("Raw data: $text")
 
                         try {
                             val data = Json.decodeFromString<SampleData>(text)
 
                             withContext(Dispatchers.Main) {
-                                println("🔥 WebSocket ile veri alındı: ${data.name}")
+                                println("Data: ${data.name}")
                                 callback(data)
                             }
 
                             _incomingMessages.value = _incomingMessages.value + data
                         } catch (e: Exception) {
-                            println("❌ JSON parse hatası: ${e.message}")
+                            println("${e.message}")
                         }
                     }
                 }
             } catch (e: Exception) {
-                println("❌ WebSocket bağlantı hatası: ${e.message}")
+                println("${e.message}")
             } finally {
-                println("🔌 WebSocket kapatıldı")
                 _isWebSocketConnected.value = false
                 webSocketSession = null
             }
         }
     }
 
-
-    // WebSocket bağlantısını kapat
     fun disconnectWebSocket() {
         webSocketJob?.cancel()
         webSocketJob = null

@@ -59,7 +59,7 @@ fun LogsPanel(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Sunucu Logları",
+                    text = "Server Logs",
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     modifier = Modifier.weight(1f)
@@ -68,7 +68,7 @@ fun LogsPanel(
                 IconButton(onClick = onClearLogs) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Logları Temizle"
+                        contentDescription = "Clear Logs"
                     )
                 }
             }
@@ -83,14 +83,13 @@ fun LogsPanel(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Henüz log bulunmuyor",
+                        text = "There are no logs yet",
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                     )
                 }
             } else {
                 val listState = rememberLazyListState()
 
-                // Otomatik aşağı kaydırma
                 LaunchedEffect(logs.size) {
                     if (logs.isNotEmpty()) {
                         listState.animateScrollToItem(logs.size - 1)
