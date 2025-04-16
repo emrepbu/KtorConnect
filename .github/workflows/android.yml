@@ -1,4 +1,4 @@
-name: Generate APKs for Client and Server Apps
+name: Android CI
 
 env:
   # Module names for your project
