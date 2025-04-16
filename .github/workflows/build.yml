@@ -11,7 +11,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'release/**'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -36,10 +35,9 @@ jobs:
           java-version: '11'
           cache: 'gradle'
       
-      # SERVER APP Build
+      # App Build
       - name: Build Server APK
         run: |
-          cd ${{ env.server_module }}
           chmod +x ./gradlew
           ./gradlew assembleDebug
           ./gradlew assembleRelease
@@ -57,14 +55,6 @@ jobs:
         with:
           name: ${{ env.date_today }} - ${{ env.project_name }} - Server - Release APK
           path: ${{ env.server_module }}/build/outputs/apk/release/
-      
-      # CLIENT APP Build
-      - name: Build Client APK
-        run: |
-          cd ${{ env.client_module }}
-          chmod +x ./gradlew
-          ./gradlew assembleDebug
-          ./gradlew assembleRelease
       
       # Upload Client Debug APK
       - name: Upload Client APK Debug
