@@ -76,7 +76,7 @@ The applications communicate through:
 - Android SDK 28+
 - Kotlin 1.8+
 - Ktor 3.1.2
-- Android Studio Arctic Fox or later
+- Android Studio Meerkat or later
 
 ## Setup and Installation
 
