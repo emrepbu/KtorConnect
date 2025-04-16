@@ -2,9 +2,6 @@
 ![Status](https://img.shields.io/badge/Status-Development-yellow)
 ![Purpose](https://img.shields.io/badge/Purpose-Educational-blue)
 
-[![Android Studio](https://img.shields.io/badge/Android%20Studio-Meerkat-3DDC84)](https://developer.android.com/studio)
-
-This project was developed with assistance from Gemini AI Assistant, an integrated AI feature in Android Studio Meerkat that provides code suggestions and development guidance.
 ## Overview
 
 KtorConnect is a project demonstrating a client-server architecture entirely on Android devices. It consists of two
@@ -131,6 +128,10 @@ Contributions, suggestions, and feedback are welcome!
 [MIT License](LICENSE)
 
 ## Acknowledgements
+
+[![Android Studio](https://img.shields.io/badge/Android%20Studio-Meerkat-3DDC84)](https://developer.android.com/studio)
+
+This project was developed with assistance from Gemini AI Assistant, an integrated AI feature in Android Studio Meerkat that provides code suggestions and development guidance.
 
 [![Ktor](https://img.shields.io/badge/Ktor-3.1.2-7848AA)](https://ktor.io/)
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-F88909)](https://kotlinlang.org/)
