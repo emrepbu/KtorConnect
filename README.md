@@ -1,32 +1,30 @@
-# KtorConnect - Android Ktor Server-Client Architecture
+# KtorConnect - Android Ktor Server-Client Applications
+
 ![Status](https://img.shields.io/badge/Status-Development-yellow)
 ![Purpose](https://img.shields.io/badge/Purpose-Educational-blue)
 
 ## Overview
 
-KtorConnect is a project demonstrating a client-server architecture entirely on Android devices. It consists of two
-separate Android applications:
+KtorConnect is a project demonstrating a client-server architecture entirely on Android devices. It consists of two separate Android applications:
 
 1. **Server Application**: An Android app that hosts a Ktor server using a foreground service
 2. **Client Application**: An Android app that connects to the server via REST API and WebSocket
 
-This system allows Android devices to communicate with each other directly over a local network, without requiring an
-external server.
+This system allows Android devices to communicate with each other directly over a local network, without requiring an external server.
 
 ## Architecture
-![project-architecture-final](https://github.com/user-attachments/assets/96ff540b-38a7-45b2-b6f6-8f314e221bce)
-*Architecture diagram showing the components and communication flow between the server and client applications.*
 
+![project-architecture-final](https://github.com/user-attachments/assets/96ff540b-38a7-45b2-b6f6-8f314e221bce)
+
+*Architecture diagram showing the components and communication flow between the server and client applications.*
 
 ## Applications
 
 ### Server Application
 
-The server app runs a Ktor HTTP and WebSocket server directly on the Android device, making it accessible over the local
-network.
+The server app runs a Ktor HTTP and WebSocket server directly on the Android device, making it accessible over the local network.
 
 **Key Components:**
-
 - `MainActivity`: UI for controlling the server (start/stop)
 - `ServerManager`: Manages server lifecycle and maintains server state
 - `ServerService`: Foreground service that runs the Ktor server
@@ -34,7 +32,6 @@ network.
 - `ServerModule`: Configures Ktor routes and endpoints
 
 **Features:**
-
 - Start/stop server control
 - Server status monitoring
 - Port configuration
@@ -48,13 +45,11 @@ network.
 The client app connects to the server app and demonstrates data exchange capabilities.
 
 **Key Components:**
-
 - `MainActivity`: Client UI
 - `KtorApiClient`: Handles HTTP requests and WebSocket connection
 - `MainViewModel`: Manages UI state and server communication
 
 **Features:**
-
 - Server connection configuration
 - Data retrieval and display
 - Submitting new data
@@ -146,9 +141,9 @@ The following features are planned for future development:
 
 This project was developed with assistance from Gemini AI Assistant, an integrated AI feature in Android Studio Meerkat that provides code suggestions and development guidance.
 
-[![Ktor](https://img.shields.io/badge/Ktor-3.1.2-7848AA)](https://ktor.io/)
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-F88909)](https://kotlinlang.org/)
-[![Coroutines](https://img.shields.io/badge/Coroutines-1.6.4-683DBA)](https://kotlinlang.org/docs/coroutines-overview.html)
-[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.4.0-4285F4)](https://developer.android.com/jetpack/compose)
-[![Android](https://img.shields.io/badge/Android-SDK%2028+-3DDC84)](https://developer.android.com/)
-[![Architecture](https://img.shields.io/badge/Architecture-MVVM-CD9834)](https://developer.android.com/topic/libraries/architecture)
+[![Ktor](https://img.shields.io/badge/Ktor-3.1.2-7848AA)](https://ktor.io/) - Asynchronous web framework for Kotlin  
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-F88909)](https://kotlinlang.org/) - Modern programming language for Android  
+[![Coroutines](https://img.shields.io/badge/Coroutines-1.6.4-683DBA)](https://kotlinlang.org/docs/coroutines-overview.html) - Asynchronous programming framework  
+[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.4.0-4285F4)](https://developer.android.com/jetpack/compose) - Modern UI toolkit for Android  
+[![Android](https://img.shields.io/badge/Android-SDK%2028+-3DDC84)](https://developer.android.com/) - Mobile application platform  
+[![Architecture](https://img.shields.io/badge/Architecture-MVVM-CD9834)](https://developer.android.com/topic/libraries/architecture) - For MVVM implementation
