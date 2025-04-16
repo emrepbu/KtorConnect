@@ -1,4 +1,6 @@
 # KtorConnect - Android Ktor Server-Client Architecture
+![Status](https://img.shields.io/badge/Status-Development-yellow)
+![Purpose](https://img.shields.io/badge/Purpose-Educational-blue)
 
 ## Overview
 
@@ -10,6 +12,11 @@ separate Android applications:
 
 This system allows Android devices to communicate with each other directly over a local network, without requiring an
 external server.
+
+## Architecture
+![project-architecture-final](https://github.com/user-attachments/assets/96ff540b-38a7-45b2-b6f6-8f314e221bce)
+*Architecture diagram showing the components and communication flow between the server and client applications.*
+
 
 ## Applications
 
@@ -102,12 +109,29 @@ The applications communicate through:
 - **Architecture**: MVVM pattern with repository
 - **Serialization**: Kotlin Serialization for JSON handling
 
+## Project Status
+
+⚠️ **This project is currently in development and is intended for demonstration purposes only.**
+
+This is a proof-of-concept application showcasing Ktor server-client architecture on Android devices. It is not intended for production use in its current state. Features may be incomplete, and breaking changes might occur in future updates.
+
+Feel free to use this codebase for learning and experimentation, but be aware of the following limitations:
+- Security features are minimal
+- Error handling may not cover all edge cases
+- Performance optimizations are limited
+- Documentation is still in progress
+
+Contributions, suggestions, and feedback are welcome!
+
 ## License
 
 [MIT License](LICENSE)
 
 ## Acknowledgements
 
-- [Ktor](https://ktor.io/)
-- [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
-- [Jetpack Compose](https://developer.android.com/jetpack/compose)
+[![Ktor](https://img.shields.io/badge/Ktor-3.1.2-7848AA)](https://ktor.io/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-F88909)](https://kotlinlang.org/)
+[![Coroutines](https://img.shields.io/badge/Coroutines-1.6.4-683DBA)](https://kotlinlang.org/docs/coroutines-overview.html)
+[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.4.0-4285F4)](https://developer.android.com/jetpack/compose)
+[![Android](https://img.shields.io/badge/Android-SDK%2028+-3DDC84)](https://developer.android.com/)
+[![Architecture](https://img.shields.io/badge/Architecture-MVVM-CD9834)](https://developer.android.com/topic/libraries/architecture)
