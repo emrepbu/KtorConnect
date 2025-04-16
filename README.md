@@ -127,15 +127,15 @@ Contributions, suggestions, and feedback are welcome!
 
 The following features are planned for future development:
 
-- **Modularization**: Restructure the application using a modular architecture to improve maintainability, enable parallel development, and facilitate feature isolation
-- **Dependency Injection with Dagger Hilt**: Implement proper dependency injection to improve code organization, testability, and maintainability
-- **Enhanced Security**: Implement proper authentication and encryption for server-client communication
-- **Offline Support**: Add local caching and synchronization when reconnecting
-- **UI Improvements**: Enhance the user interface with more interactive elements and better visual feedback
-- **Comprehensive Testing**: Add unit tests, integration tests, and UI tests
-- **Multi-Client Support**: Improve handling of multiple simultaneous client connections
-- **Configuration Persistence**: Save server and client settings between sessions
-
+- [ ] **Modularization**: Restructure the application using a modular architecture to improve maintainability, enable parallel development, and facilitate feature isolation
+- [ ] **Dependency Injection with Dagger Hilt**: Implement proper dependency injection to improve code organization, testability, and maintainability
+- [ ] **Enhanced Security**: Implement proper authentication and encryption for server-client communication
+- [ ] **Offline Support**: Add local caching and synchronization when reconnecting
+- [ ] **UI Improvements**: Enhance the user interface with more interactive elements and better visual feedback
+- [ ] **Comprehensive Testing**: Add unit tests, integration tests, and UI tests
+- [ ] **Multi-Client Support**: Improve handling of multiple simultaneous client connections
+- [ ] **Configuration Persistence**: Save server and client settings between sessions
+      
 ## License
 
 [MIT License](LICENSE)
