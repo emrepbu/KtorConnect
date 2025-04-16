@@ -1,8 +1,10 @@
 name: Generate APKs for Client and Server Apps
 
 env:
+  # Module names for your project
   server_module: server
   client_module: client
+  # Project name
   project_name: KtorConnect
 
 on:
@@ -34,21 +36,13 @@ jobs:
           java-version: '11'
           cache: 'gradle'
       
-      # SERVER APP
-      # Change wrapper permissions for Server
-      - name: Change wrapper permissions for Server
-        working-directory: ./${{ env.server_module }}
-        run: chmod +x ./gradlew
-      
-      # Create APK Debug for Server
-      - name: Build Server apk debug
-        working-directory: ./${{ env.server_module }}
-        run: ./gradlew assembleDebug
-      
-      # Create APK Release for Server
-      - name: Build Server apk release
-        working-directory: ./${{ env.server_module }}
-        run: ./gradlew assembleRelease
+      # SERVER APP Build
+      - name: Build Server APK
+        run: |
+          cd ${{ env.server_module }}
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
+          ./gradlew assembleRelease
       
       # Upload Server Debug APK
       - name: Upload Server APK Debug
@@ -64,21 +58,13 @@ jobs:
           name: ${{ env.date_today }} - ${{ env.project_name }} - Server - Release APK
           path: ${{ env.server_module }}/build/outputs/apk/release/
       
-      # CLIENT APP
-      # Change wrapper permissions for Client
-      - name: Change wrapper permissions for Client
-        working-directory: ./${{ env.client_module }}
-        run: chmod +x ./gradlew
-      
-      # Create APK Debug for Client
-      - name: Build Client apk debug
-        working-directory: ./${{ env.client_module }}
-        run: ./gradlew assembleDebug
-      
-      # Create APK Release for Client
-      - name: Build Client apk release
-        working-directory: ./${{ env.client_module }}
-        run: ./gradlew assembleRelease
+      # CLIENT APP Build
+      - name: Build Client APK
+        run: |
+          cd ${{ env.client_module }}
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
+          ./gradlew assembleRelease
       
       # Upload Client Debug APK
       - name: Upload Client APK Debug
